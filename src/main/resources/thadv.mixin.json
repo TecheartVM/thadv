@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.7.11",
+  "compatibilityLevel": "JAVA_8",
+  "package": "techeart.thadv.api.mixin",
+  "refmap": "mixins.thadv.refmap.json",
+  "mixins": [
+    "MixinLevel"
+  ],
+  "client": [],
+  "server": []
+}
