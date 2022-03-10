@@ -12,6 +12,7 @@ import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.client.gui.OverlayRegistry;
 import techeart.thadv.content.MainClass;
 import techeart.thadv.content.network.packets.PacketBossEventSync;
+import techeart.thadv.content.world.ModBossEventClient;
 import techeart.thadv.utils.ColorUtils;
 
 import java.util.LinkedHashMap;

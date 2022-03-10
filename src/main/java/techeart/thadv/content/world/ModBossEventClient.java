@@ -1,4 +1,4 @@
-package techeart.thadv.content.gui;
+package techeart.thadv.content.world;
 
 import net.minecraft.Util;
 import net.minecraft.network.chat.Component;

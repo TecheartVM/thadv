@@ -8,6 +8,8 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.PistonEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import software.bernie.geckolib3.GeckoLib;
@@ -63,9 +65,7 @@ public class MainClass
     {
         HUD_BOSS_HEALTH_OVERLAY.init();
 
-        EntityRenderers.register(RegistryHandler.STONE_GUARDIAN.get(), RendererStoneGuardian::new);
-        EntityRenderers.register(RegistryHandler.LAVA_BALL.get(), RendererLavaBall::new);
-        EntityRenderers.register(RegistryHandler.LAVA_ERUPTION.get(), RendererEruptionSource::new);
+        RenderHandler.registerEntityRenderers();
     }
 
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)

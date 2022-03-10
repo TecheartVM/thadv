@@ -1,4 +1,4 @@
-package techeart.thadv.content.gui;
+package techeart.thadv.content.world;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;

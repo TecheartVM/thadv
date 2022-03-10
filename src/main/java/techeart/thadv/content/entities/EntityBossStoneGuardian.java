@@ -32,7 +32,7 @@ import techeart.thadv.api.EntityMultipart;
 import techeart.thadv.api.EntityMultipartPart;
 import techeart.thadv.api.IModEntity;
 import techeart.thadv.content.entities.ai.*;
-import techeart.thadv.content.gui.ModBossEventServer;
+import techeart.thadv.content.world.ModBossEventServer;
 import techeart.thadv.content.network.PacketHandler;
 import techeart.thadv.content.network.packets.PacketGuardianStateSync;
 

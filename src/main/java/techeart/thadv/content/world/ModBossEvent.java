@@ -1,4 +1,4 @@
-package techeart.thadv.content.gui;
+package techeart.thadv.content.world;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

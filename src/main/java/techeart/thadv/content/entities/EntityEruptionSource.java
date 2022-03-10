@@ -2,9 +2,6 @@ package techeart.thadv.content.entities;
 
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -15,10 +12,9 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nonnull;
 import java.util.Random;
 
-public class EntityEruptionSource extends Entity
+public class EntityEruptionSource extends EntityDummy
 {
     public static final EntityType<EntityEruptionSource> TYPE = EntityType.Builder.<EntityEruptionSource>of(
             EntityEruptionSource::new,
@@ -64,37 +60,6 @@ public class EntityEruptionSource extends Entity
 
         super.tick();
     }
-
-    @Override
-    public boolean isPickable() { return false; }
-
-    @Override
-    public boolean isInvulnerableTo(@Nonnull DamageSource damageSource) { return damageSource != DamageSource.OUT_OF_WORLD; }
-
-    @Override
-    public boolean isNoGravity() { return true; }
-
-    @Override
-    public boolean isPushable() { return false; }
-
-    @Override
-    public void push(double p_20286_, double p_20287_, double p_20288_) { }
-
-    @Override
-    public boolean canBeCollidedWith() { return false; }
-
-    @Override
-    protected void defineSynchedData() { }
-
-    @Override
-    protected void addAdditionalSaveData(@Nonnull CompoundTag tag) { }
-
-    @Override
-    protected void readAdditionalSaveData(@Nonnull CompoundTag tag) { }
-
-    @Override
-    @Nonnull
-    public Packet<?> getAddEntityPacket() { return new ClientboundAddEntityPacket(this); }
 
     @OnlyIn(Dist.CLIENT)
     protected void spawnParticles()
