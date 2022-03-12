@@ -10,11 +10,13 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import techeart.thadv.content.misc.Rune;
+import techeart.thadv.content.network.PacketHandler;
+import techeart.thadv.content.network.packets.PacketPowerCrystalConfigure;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,16 +37,21 @@ public class GuiSelectRune extends Screen
     private static final int LIST_HEIGHT_REAL = LIST_HEIGHT - PADDING_TOP - PADDING_BOTTOM;
 
     private final Player player;
-    private final ItemStack item;
+    private final InteractionHand hand;
     private final List<Rune> displayableRunes;
     private final List<RuneButton> runeButtons = new ArrayList<>();
 
-    public GuiSelectRune(Player player, ItemStack item)
+    public GuiSelectRune(Player player, InteractionHand hand)
     {
         super(NarratorChatListener.NO_TITLE);
         this.player = player;
-        this.item = item;
+        this.hand = hand;
         displayableRunes = new ArrayList<>(Rune.getKnownRunes(player));
+    }
+
+    protected void onClickRuneButton(InteractionHand hand, Rune rune)
+    {
+        PacketHandler.sendToServer(new PacketPowerCrystalConfigure(hand, rune));
     }
 
     @Override
@@ -56,9 +63,13 @@ public class GuiSelectRune extends Screen
 
         for(int i = 0; i < displayableRunes.size(); i++)
         {
+            Rune rune = displayableRunes.get(i);
             runeButtons.add(
                     this.addRenderableWidget(
-                            new RuneButton(x, y, TILE_SIZE, TILE_SIZE + font.lineHeight, font, displayableRunes.get(i))
+                            new RuneButton(x, y, TILE_SIZE, TILE_SIZE + font.lineHeight, font, rune, btn -> {
+                                onClickRuneButton(hand, rune);
+                                onClose();
+                            })
                     )
             );
             if((i + 1) % TILES_IN_ROW == 0)
@@ -86,17 +97,15 @@ public class GuiSelectRune extends Screen
         private final Font font;
         private final Rune rune;
 
-        public RuneButton(int x, int y, int w, int h, Font font, Rune rune)
+        public RuneButton(int x, int y, int w, int h, Font font, Rune rune, OnPress onPress)
         {
-            super(x, y, w, h, new TranslatableComponent(rune.getName()), button -> {
-
-            });
+            super(x, y, w, h, new TranslatableComponent(rune.getName()), onPress);
             this.font = font;
             this.rune = rune;
         }
 
         @Override
-        public void renderButton(PoseStack poseStack, int p_93747_, int p_93748_, float p_93749_)
+        public void renderButton(PoseStack poseStack, int p1, int p2, float p3)
         {
             //selection
             if(isHovered()) fill(poseStack, x, y-2, x+width, y+height, 0x61d0d0d0);
@@ -111,7 +120,7 @@ public class GuiSelectRune extends Screen
         @Override
         public void playDownSound(SoundManager sm)
         {
-            sm.play(SimpleSoundInstance.forUI(SoundEvents.AMETHYST_CLUSTER_PLACE, 1.0F));
+            sm.play(SimpleSoundInstance.forUI(SoundEvents.LARGE_AMETHYST_BUD_PLACE, 1.0F));
         }
     }
 }

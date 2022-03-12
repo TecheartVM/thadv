@@ -3,8 +3,10 @@ package techeart.thadv.content.entities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
@@ -59,11 +61,11 @@ public class EntityCarvedRune extends EntityDummy
         setSyncRequired();
     }
 
-    public void clearFace(@Nonnull Direction face)
+    public boolean clearFace(@Nonnull Direction face)
     {
-        carvedFaces.remove(face);
-        if(level.isClientSide()) return;
-        if(carvedFaces.size() > 0) setSyncRequired();
+        boolean b = carvedFaces.remove(face) != null;
+        if(!level.isClientSide() && carvedFaces.size() > 0 && b) setSyncRequired();
+        return b;
     }
 
     //this method is not setting the 'syncRequired' value to true because
@@ -110,7 +112,11 @@ public class EntityCarvedRune extends EntityDummy
         if(level.isClientSide()) return;
 
         boolean changes = carvedFaces.keySet().removeIf(face -> !canFaceBeCarved(level, position, face));
-        if(carvedFaces.isEmpty()) discard();
+        if(carvedFaces.isEmpty())
+        {
+            discard();
+            onRemoved();
+        }
         else if(changes) setSyncRequired();
     }
 
@@ -130,6 +136,8 @@ public class EntityCarvedRune extends EntityDummy
             if(syncRequired) syncFacesChanges();
         }
     }
+
+    protected void onRemoved() {  }
 
     //synchronization
     protected void syncFacesChanges()
@@ -162,6 +170,24 @@ public class EntityCarvedRune extends EntityDummy
 
     public BlockPos getPos() { return position; }
 
+    @Override
+    public void move(MoverType moverType, Vec3 motionVec)
+    {
+        if(level.isClientSide() || !isAlive()) return;
+        if(motionVec.lengthSqr() == 0.0D) return;
+        discard();
+        onRemoved();
+    }
+
+    @Override
+    public void push(double x, double y, double z)
+    {
+        if(level.isClientSide() || !isAlive()) return;
+        if(x*x + y*y + z*z == 0.0D) return;
+        discard();
+        onRemoved();
+    }
+
     //save & load
     @Override
     protected void addAdditionalSaveData(CompoundTag nbt)
@@ -174,7 +200,8 @@ public class EntityCarvedRune extends EntityDummy
         for(Map.Entry<Direction, Rune> e : carvedFaces.entrySet())
         {
             nbt.putInt("Face" + count, e.getKey().ordinal());
-            e.getValue().save(nbt);
+            e.getValue().save("Rune" + count, nbt);
+            count++;
         }
     }
 
@@ -183,11 +210,13 @@ public class EntityCarvedRune extends EntityDummy
     {
         carvedFaces.clear();
         position = new BlockPos(nbt.getInt("PosX"), nbt.getInt("PosY"), nbt.getInt("PosZ"));
-        for(int i = 0; i < nbt.getInt("RuneCount"); i++)
+        int count = nbt.getInt("RuneCount");
+        for(int i = 0; i < count; i++)
         {
             Direction face = Direction.values()[nbt.getInt("Face" + i)];
-            Rune rune = Rune.load(nbt);
+            Rune rune = Rune.load("Rune" + i, nbt);
             if(rune != null) carvedFaces.put(face, rune);
         }
+        setSyncRequired();
     }
 }

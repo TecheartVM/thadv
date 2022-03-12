@@ -34,12 +34,12 @@ public class GuiBossEventBar
                 (gui, matrixStack, partialTicks, screenWidth, screenHeight) -> {
                     Minecraft mc = Minecraft.getInstance();
                     if(!mc.options.hideGui)
-                        render(mc, gui, matrixStack, partialTicks, screenWidth, screenHeight);
+                        render(mc, gui, matrixStack);
                 }
         );
     }
 
-    private void render(Minecraft mc, ForgeIngameGui gui, PoseStack matrixStack, float partialTicks, int screenWidth, int screenHeight)
+    protected void render(Minecraft mc, ForgeIngameGui gui, PoseStack matrixStack)
     {
         if(events.isEmpty()) return;
 
@@ -62,7 +62,7 @@ public class GuiBossEventBar
         }
     }
 
-    private void drawBar(ForgeIngameGui gui, PoseStack matrixStack, int x, int y, ModBossEventClient e)
+    protected void drawBar(ForgeIngameGui gui, PoseStack matrixStack, int x, int y, ModBossEventClient e)
     {
         int barW = e.getBarWidth();
         int barH = e.getBarHeight();

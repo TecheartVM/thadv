@@ -37,6 +37,7 @@ public class PacketHandler
         registerMessage(PacketGuardianStateSync.class, PacketGuardianStateSync::encode, PacketGuardianStateSync::decode, PacketGuardianStateSync::handle);
         registerMessage(PacketParticleCircleWave.class, PacketParticleCircleWave::encode, PacketParticleCircleWave::decode, PacketParticleCircleWave::handle);
         registerMessage(PacketCarvedRuneFacesSync.class, PacketCarvedRuneFacesSync::encode, PacketCarvedRuneFacesSync::decode, PacketCarvedRuneFacesSync::handle);
+        registerMessage(PacketPowerCrystalConfigure.class, PacketPowerCrystalConfigure::encode, PacketPowerCrystalConfigure::decode, PacketPowerCrystalConfigure::handle);
         registerMessage(PacketBossEventSync.class, PacketBossEventSync::encode, PacketBossEventSync::decode, PacketBossEventSync::handle);
         registerMessage(PacketEasySync.class, PacketEasySync::encode, PacketEasySync::decode, PacketEasySync::handle);
     }

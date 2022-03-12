@@ -51,9 +51,9 @@ public class PacketEntityPartOffsetSync
             {
                 EntityMultipartPart part = parent.getPart(msg.partId);
                 if(part != null) part.setOffset(msg.offset);
-                else System.out.println("No part to move");
+//                else System.out.println("No part to move");
             }
-            else System.out.println("No parent with give ID");
+//            else System.out.println("No parent with give ID");
         });
         ctx.get().setPacketHandled(true);
     }

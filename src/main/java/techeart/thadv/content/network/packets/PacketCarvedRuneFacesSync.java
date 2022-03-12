@@ -42,7 +42,9 @@ public class PacketCarvedRuneFacesSync
         int runeCount = buf.readInt();
         for(int i = 0; i < runeCount; i++)
         {
-            faces.put(buf.readEnum(Direction.class), Rune.identify(buf.readInt()));
+            Direction face = buf.readEnum(Direction.class);
+            Rune rune = Rune.identify(buf.readInt());
+            faces.put(face, rune);
         }
         return new PacketCarvedRuneFacesSync(faces, eId);
     }

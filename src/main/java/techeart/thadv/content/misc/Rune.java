@@ -50,18 +50,17 @@ public class Rune
         this.rl = rl;
     }
 
-    public CompoundTag save(CompoundTag nbt)
+    public CompoundTag save(String tagId, CompoundTag nbt)
     {
-        nbt.putInt("ID", id);
+        nbt.putInt(tagId, id);
         return nbt;
     }
 
     @Nullable
-    public static Rune load(CompoundTag nbt)
+    public static Rune load(String tagId, CompoundTag nbt)
     {
-        int i = nbt.getInt("ID");
-        for(Rune r : REGISTERED) if(r.id == i) return r;
-        return null;
+        int i = nbt.getInt(tagId);
+        return identify(i);
     }
 
     @Nullable
@@ -69,6 +68,15 @@ public class Rune
     {
         for(Rune r : REGISTERED) if(r.id == id) return r;
         return null;
+    }
+
+    public static Rune cycle(Rune initial, boolean forward)
+    {
+        if(initial == null) return identify(0);
+        int index = initial.id + (forward ? 1 : -1);
+        if(index >= REGISTERED.size()) index = 0;
+        else if(index < 0) index = REGISTERED.size() - 1;
+        return identify(index);
     }
 
     public String getName() { return name; }
