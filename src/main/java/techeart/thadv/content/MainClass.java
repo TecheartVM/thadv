@@ -16,6 +16,7 @@ import techeart.thadv.content.gui.GuiBossEventBar;
 import techeart.thadv.content.gui.GuiHotbarRune;
 import techeart.thadv.content.gui.GuiTooltipRune;
 import techeart.thadv.content.network.PacketHandler;
+import techeart.thadv.content.world.structures.StructuresHandler;
 import techeart.thadv.utils.DispenserBehaviourHandler;
 import techeart.thadv.utils.RenderHandler;
 
@@ -48,6 +49,10 @@ public class MainClass
     {
         PacketHandler.register();
         DispenserBehaviourHandler.register();
+
+        event.enqueueWork(() -> {
+            StructuresHandler.registerStructures();
+        });
     }
 
     private void doClientStuff(final FMLClientSetupEvent event)

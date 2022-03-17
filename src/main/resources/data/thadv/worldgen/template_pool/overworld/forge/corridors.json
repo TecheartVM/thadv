@@ -1,0 +1,51 @@
+{
+  "name": "thadv:overworld_forge_corridors",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 100,
+      "element": {
+        "location": "thadv:overworld/forge/corridor_common",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 80,
+      "element": {
+        "location": "thadv:overworld/forge/corridor_lava",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 80,
+      "element": {
+        "location": "thadv:overworld/forge/corridor_spiders",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 80,
+      "element": {
+        "location": "thadv:overworld/forge/corridor_trap",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 80,
+      "element": {
+        "location": "thadv:overworld/forge/corridor_chest",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

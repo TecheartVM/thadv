@@ -8,9 +8,9 @@ import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -18,7 +18,7 @@ import techeart.thadv.api.EntityMultipartPart;
 import techeart.thadv.content.MainClass;
 import techeart.thadv.content.entities.EntityBossStoneGuardian;
 import techeart.thadv.content.items.ItemPowerCrystal;
-import techeart.thadv.utils.ServerLevelEvent;
+import techeart.thadv.content.world.structures.StructuresHandler;
 
 @Mod.EventBusSubscriber
 public class EventHandler
@@ -63,11 +63,19 @@ public class EventHandler
     @SubscribeEvent
     public static void onWorldLoad(WorldEvent.Load event)
     {
-        //load server level events
-        if(!event.getWorld().isClientSide())
+        if(event.getWorld() instanceof ServerLevel level)
         {
-            ServerLevelEvent.LevelEventData.loadOrCreate((ServerLevel) event.getWorld());
+            //load server level events
+            ServerLevelEvent.LevelEventData.loadOrCreate(level);
+            //processing custom structures
+            StructuresHandler.addDimensionalSpacing(level);
         }
+    }
+
+    @SubscribeEvent
+    public static void onBiomeLoad(BiomeLoadingEvent event)
+    {
+        StructuresHandler.generateStructures(event);
     }
 
     @SubscribeEvent
@@ -78,10 +86,5 @@ public class EventHandler
         Player player = mc.player;
         if(ItemPowerCrystal.onScroll(player, event.getScrollDelta()))
             event.setCanceled(true);
-    }
-
-    public static void v(RenderTooltipEvent.PostBackground event)
-    {
-
     }
 }

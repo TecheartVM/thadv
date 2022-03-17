@@ -1,0 +1,87 @@
+{
+  "name": "thadv:overworld_forge_rooms",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 90,
+      "element": {
+        "location": "thadv:overworld/forge/arboretum",
+        "processors": "minecraft:empty",
+		"projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+	{	
+      "weight": 90,
+      "element": {
+        "location": "thadv:overworld/forge/basin",
+        "processors": "minecraft:empty",
+		"projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 120,
+      "element": {
+        "location": "thadv:overworld/forge/canal",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 50,
+      "element": {
+        "location": "thadv:overworld/forge/forge",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 90,
+      "element": {
+        "location": "thadv:overworld/forge/smeltery",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 100,
+      "element": {
+        "location": "thadv:overworld/forge/rest_room",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 100,
+      "element": {
+        "location": "thadv:overworld/forge/conference_room",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 50,
+      "element": {
+        "location": "thadv:overworld/forge/depository",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 150,
+      "element": {
+        "location": "thadv:overworld/forge/intersection",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}
