@@ -3,11 +3,11 @@ package techeart.thadv.content.entities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.MoverType;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
@@ -19,33 +19,36 @@ import techeart.thadv.content.network.packets.PacketCarvedRuneFacesSync;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Function;
 
 public class EntityCarvedRune extends EntityDummy
 {
     public static final EntityType<EntityCarvedRune> TYPE = EntityType.Builder.<EntityCarvedRune>of(
-            EntityCarvedRune::new,
-            MobCategory.MISC
-    ).sized(1.0f, 1.0f).setShouldReceiveVelocityUpdates(false).noSummon()
+                    EntityCarvedRune::new,
+                    MobCategory.MISC
+            ).sized(1.0f, 1.0f).setShouldReceiveVelocityUpdates(false).noSummon()
             .clientTrackingRange(10).updateInterval(4).build("carved_rune");
 
     private static final Material[] CARVABLE_MATERIALS = { Material.STONE, Material.METAL, Material.HEAVY_METAL };
-
     private static final int VALIDATION_PERIOD = 10;
 
     private int validationTimer = 0;
-    private BlockPos position;
     private boolean syncRequired = false;
 
+    private Direction direction = Direction.NORTH;
+    private Direction directionBottom = Direction.NORTH;
     private final EnumMap<Direction, Rune> carvedFaces = new EnumMap<>(Direction.class);
 
     public EntityCarvedRune(EntityType<?> type, Level level) { super(type, level); }
 
-    public EntityCarvedRune(Level level, BlockPos pos)
+    public EntityCarvedRune(Level level, BlockPos pos, Direction dir)
     {
         super(TYPE, level);
-        setPos(pos.getX(), pos.getY(), pos.getZ());
+        setPos(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D);
+        setDirection(dir);
     }
 
+    //faces manipulation
     public void setFace(@Nonnull Direction face, @Nonnull Rune rune)
     {
         carvedFaces.put(face, rune);
@@ -111,7 +114,7 @@ public class EntityCarvedRune extends EntityDummy
     {
         if(level.isClientSide()) return;
 
-        boolean changes = carvedFaces.keySet().removeIf(face -> !canFaceBeCarved(level, position, face));
+        boolean changes = carvedFaces.keySet().removeIf(face -> !canFaceBeCarved(level, blockPosition(), face));
         if(carvedFaces.isEmpty())
         {
             discard();
@@ -154,21 +157,16 @@ public class EntityCarvedRune extends EntityDummy
     @Override
     public void setPos(double x, double y, double z)
     {
-        position = new BlockPos(x, y, z);
-        super.setPos(position.getX(), position.getY(), position.getZ());
-        hasImpulse = true;
+        super.setPos(Math.floor(x) + 0.5D, Math.floor(y), Math.floor(z) + 0.5D);
     }
 
     @Nonnull
     @Override
     protected AABB makeBoundingBox()
     {
-        float hW = TYPE.getWidth() * 0.5f;
-        Vec3 posCenter = new Vec3(position.getX() + hW, position.getY(), position.getZ() + hW);
+        Vec3 posCenter = new Vec3(blockPosition().getX() + 0.5D, blockPosition().getY(), blockPosition().getZ() + 0.5D);
         return TYPE.getDimensions().makeBoundingBox(posCenter);
     }
-
-    public BlockPos getPos() { return position; }
 
     @Override
     public void move(MoverType moverType, Vec3 motionVec)
@@ -188,13 +186,95 @@ public class EntityCarvedRune extends EntityDummy
         onRemoved();
     }
 
+    @Override
+    public float rotate(@Nonnull Rotation rotation)
+    {
+        float f = Mth.wrapDegrees(this.getDirection().toYRot());
+        switch(rotation)
+        {
+            case CLOCKWISE_180:
+                rotateFaces(Direction::getOpposite);
+                return f + 180.0F;
+            case COUNTERCLOCKWISE_90:
+                rotateFaces(Direction::getCounterClockWise);
+                return f + 270.0F;
+            case CLOCKWISE_90:
+                rotateFaces(Direction::getClockWise);
+                return f + 90.0F;
+            default:
+                return f;
+        }
+    }
+
+    @Override
+    public float mirror(@Nonnull Mirror mirror)
+    {
+        float f = Mth.wrapDegrees(this.getDirection().toYRot());
+        switch(mirror)
+        {
+            case LEFT_RIGHT:
+            {
+                Rune left = getFace(getDirection().getCounterClockWise());
+                Rune right = getFace(getDirection().getClockWise());
+                if(right != null) setFace(getDirection().getCounterClockWise(), right);
+                if(left != null) setFace(getDirection().getClockWise(), left);
+                return -f;
+            }
+            case FRONT_BACK:
+            {
+                Rune front = getFace(getDirection());
+                Rune back = getFace(getDirection().getOpposite());
+                if(back != null) setFace(getDirection(), back);
+                setDirection(getDirection().getOpposite());
+                setBottomRuneDir(getBottomRuneDir().getOpposite());
+                if(front != null) setFace(getDirection(), front);
+                return 180.0F - f;
+            }
+            default:
+                return f;
+        }
+    }
+
+    public void setDirection(@Nullable Direction dir)
+    {
+        direction = (dir == null || dir.getAxis().isVertical()) ? Direction.NORTH : dir;
+        setYRot(direction.toYRot());
+        setSyncRequired();
+    }
+
+    public void setBottomRuneDir(@Nullable Direction dir)
+    {
+        directionBottom = (dir == null || dir.getAxis().isVertical()) ? Direction.NORTH : dir;
+        setSyncRequired();
+    }
+
+    @Override
+    @Nonnull
+    public Direction getDirection() { return direction; }
+
+    public Direction getBottomRuneDir() { return directionBottom; }
+
+    protected void rotateFaces(@Nonnull Function<Direction, Direction> rotMethod)
+    {
+        EnumMap<Direction, Rune> result = new EnumMap<>(Direction.class);
+        carvedFaces.forEach((face, rune) -> {
+            if(face.getAxis().isVertical()) result.put(face, rune);
+            else result.put(rotMethod.apply(face), rune);
+        });
+        setFaces(result);
+        setDirection(rotMethod.apply(getDirection()));
+        setBottomRuneDir(rotMethod.apply(getBottomRuneDir()));
+    }
+
+    @Override
+    protected float getEyeHeight(Pose pose, EntityDimensions dimensions) { return TYPE.getHeight() * 0.5f; }
+
     //save & load
     @Override
     protected void addAdditionalSaveData(CompoundTag nbt)
     {
-        nbt.putInt("PosX", position.getX());
-        nbt.putInt("PosY", position.getY());
-        nbt.putInt("PosZ", position.getZ());
+        nbt.putInt("Direction", getDirection().ordinal());
+        if(getFace(Direction.DOWN) != null) nbt.putInt("DirectionBottom", getBottomRuneDir().ordinal());
         nbt.putInt("RuneCount", carvedFaces.size());
         int count = 0;
         for(Map.Entry<Direction, Rune> e : carvedFaces.entrySet())
@@ -208,8 +288,10 @@ public class EntityCarvedRune extends EntityDummy
     @Override
     protected void readAdditionalSaveData(CompoundTag nbt)
     {
+        setDirection(Direction.values()[nbt.getInt("Direction")]);
+        if(nbt.contains("DirectionBottom"))
+            setBottomRuneDir(Direction.values()[nbt.getInt("DirectionBottom")]);
         carvedFaces.clear();
-        position = new BlockPos(nbt.getInt("PosX"), nbt.getInt("PosY"), nbt.getInt("PosZ"));
         int count = nbt.getInt("RuneCount");
         for(int i = 0; i < count; i++)
         {
@@ -217,6 +299,5 @@ public class EntityCarvedRune extends EntityDummy
             Rune rune = Rune.load("Rune" + i, nbt);
             if(rune != null) carvedFaces.put(face, rune);
         }
-        setSyncRequired();
     }
 }

@@ -84,7 +84,8 @@ public class ItemPowerCrystal extends Item
         Level level = ctx.getLevel();
         BlockPos clickedPos = ctx.getClickedPos();
         Direction face = ctx.getClickedFace();
-        boolean playerShifting = ctx.getPlayer() != null && ctx.getPlayer().isShiftKeyDown();
+        Player player = ctx.getPlayer();
+        boolean playerShifting = player != null && player.isShiftKeyDown();
 
         if(playerShifting && clearRune(level, clickedPos, face))
         {
@@ -94,9 +95,9 @@ public class ItemPowerCrystal extends Item
 
         if(level.isClientSide()) return InteractionResult.SUCCESS;
 
-        if(carveBlock(level, clickedPos, face, getSelectedRune(ctx.getItemInHand())))
+        if(carveBlock(level, clickedPos, face, getSelectedRune(ctx.getItemInHand()), player))
         {
-            Utils.hurtAndBreakItem(ctx.getPlayer(), ctx.getHand());
+            Utils.hurtAndBreakItem(player, ctx.getHand());
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
@@ -119,18 +120,30 @@ public class ItemPowerCrystal extends Item
 
     public static boolean carveBlock(Level level, BlockPos pos, Direction face, Rune rune)
     {
+        return carveBlock(level, pos, face, rune, null);
+    }
+
+    public static boolean carveBlock(Level level, BlockPos pos, Direction face, Rune rune, Player player)
+    {
         if(!EntityCarvedRune.canFaceBeCarved(level, pos, face)) return false;
         if(level.isClientSide()) return true;
 
         AABB searchArea = new AABB(pos);
         List<EntityCarvedRune> entitiesInBlock = level.getEntitiesOfClass(EntityCarvedRune.class, searchArea);
         EntityCarvedRune entity;
+        Direction dir = face.getAxis().isVertical() ? (player != null ? player.getDirection() : Direction.NORTH) : face;
         if(entitiesInBlock.isEmpty())
         {
-            entity = new EntityCarvedRune(level, pos);
+            entity = new EntityCarvedRune(level, pos, dir);
             level.addFreshEntity(entity);
         }
-        else entity = entitiesInBlock.get(0);
+        else
+        {
+            entity = entitiesInBlock.get(0);
+            if(face == Direction.UP) entity.setDirection(dir);
+        }
+
+        if(face == Direction.DOWN) entity.setBottomRuneDir(dir.getOpposite());
 
         entity.setFace(face, rune);
         BlockState blockState = level.getBlockState(pos);

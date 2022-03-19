@@ -40,6 +40,9 @@ public class EntityDummy extends Entity
     @Override
     public boolean isIgnoringBlockTriggers() { return true; }
 
+    @Override
+    public boolean isPassenger() { return false; }
+
     //Entity
     @Override
     protected void defineSynchedData() { }
