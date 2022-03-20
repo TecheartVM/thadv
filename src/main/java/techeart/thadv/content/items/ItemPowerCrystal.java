@@ -27,7 +27,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import techeart.thadv.content.RegistryHandler;
-import techeart.thadv.content.entities.EntityCarvedRune;
+import techeart.thadv.content.entity.entities.misc.EntityCarvedRune;
 import techeart.thadv.content.gui.GuiSelectRune;
 import techeart.thadv.content.misc.Rune;
 import techeart.thadv.content.network.PacketHandler;

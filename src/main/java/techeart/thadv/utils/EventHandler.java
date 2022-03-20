@@ -14,11 +14,11 @@ import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import techeart.thadv.api.EntityMultipartPart;
+import techeart.thadv.content.entity.entities.basic.EntityMultipartPart;
 import techeart.thadv.content.MainClass;
-import techeart.thadv.content.entities.EntityBossStoneGuardian;
+import techeart.thadv.content.entity.entities.boss.EntityBossStoneGuardian;
 import techeart.thadv.content.items.ItemPowerCrystal;
-import techeart.thadv.content.world.structures.StructuresHandler;
+import techeart.thadv.content.world.structure.StructuresHandler;
 
 @Mod.EventBusSubscriber
 public class EventHandler

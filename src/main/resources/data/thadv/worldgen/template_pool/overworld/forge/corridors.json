@@ -1,6 +1,6 @@
 {
   "name": "thadv:overworld_forge_corridors",
-  "fallback": "minecraft:empty",
+  "fallback": "thadv:overworld/forge/caps",
   "elements": [
     {
       "weight": 100,

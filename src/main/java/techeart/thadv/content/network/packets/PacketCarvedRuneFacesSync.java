@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
-import techeart.thadv.content.entities.EntityCarvedRune;
+import techeart.thadv.content.entity.entities.misc.EntityCarvedRune;
 import techeart.thadv.content.misc.Rune;
 
 import java.util.EnumMap;

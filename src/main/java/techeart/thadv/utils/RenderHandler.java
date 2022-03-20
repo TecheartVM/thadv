@@ -2,7 +2,7 @@ package techeart.thadv.utils;
 
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import techeart.thadv.content.RegistryHandler;
-import techeart.thadv.content.entities.renderers.*;
+import techeart.thadv.content.entity.renderers.*;
 
 public class RenderHandler
 {

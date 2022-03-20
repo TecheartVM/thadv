@@ -1,47 +1,20 @@
 {
-  "name": "thadv:overworld_forge_rooms",
-  "fallback": "thadv:overworld/forge/caps",
+  "name": "thadv:overworld_forge_caps",
+  "fallback": "minecraft:empty",
   "elements": [
     {
-      "weight": 90,
+      "weight": 100,
       "element": {
-        "location": "thadv:overworld/forge/arboretum",
-        "processors": "minecraft:empty",
-		"projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-	{	
-      "weight": 90,
-      "element": {
-        "location": "thadv:overworld/forge/basin",
-        "processors": "minecraft:empty",
-		"projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-    {
-      "weight": 120,
-      "element": {
-        "location": "thadv:overworld/forge/canal",
+        "location": "thadv:overworld/forge/cap_face_common",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
     },
     {
-      "weight": 50,
+      "weight": 10,
       "element": {
-        "location": "thadv:overworld/forge/forge",
-        "processors": "minecraft:empty",
-        "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-    {
-      "weight": 90,
-      "element": {
-        "location": "thadv:overworld/forge/smeltery",
+        "location": "thadv:overworld/forge/cap_face_emerald",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -50,16 +23,7 @@
     {
       "weight": 100,
       "element": {
-        "location": "thadv:overworld/forge/rest_room",
-        "processors": "minecraft:empty",
-        "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-    {
-      "weight": 100,
-      "element": {
-        "location": "thadv:overworld/forge/conference_room",
+        "location": "thadv:overworld/forge/cap_candle",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -68,16 +32,43 @@
     {
       "weight": 50,
       "element": {
-        "location": "thadv:overworld/forge/depository",
+        "location": "thadv:overworld/forge/cap_fountain",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
     },
     {
-      "weight": 150,
+      "weight": 30,
       "element": {
-        "location": "thadv:overworld/forge/intersection",
+        "location": "thadv:overworld/forge/cap_grate",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "location": "thadv:overworld/forge/cap_books",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "location": "thadv:overworld/forge/cap_barrels",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 40,
+      "element": {
+        "location": "thadv:overworld/forge/cap_rockfall",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"

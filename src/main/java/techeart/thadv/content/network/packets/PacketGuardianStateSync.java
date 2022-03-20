@@ -3,7 +3,7 @@ package techeart.thadv.content.network.packets;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
-import techeart.thadv.content.entities.EntityBossStoneGuardian;
+import techeart.thadv.content.entity.entities.boss.EntityBossStoneGuardian;
 
 import java.util.function.Supplier;
 

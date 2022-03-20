@@ -4,8 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
-import techeart.thadv.api.EntityMultipart;
-import techeart.thadv.api.EntityMultipartPart;
+import techeart.thadv.content.entity.entities.basic.EntityMultipart;
+import techeart.thadv.content.entity.entities.basic.EntityMultipartPart;
 
 import java.util.function.Supplier;
 

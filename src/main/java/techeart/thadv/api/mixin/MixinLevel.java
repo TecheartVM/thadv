@@ -32,9 +32,9 @@ public abstract class MixinLevel
 
             if (entity.isMultipartEntity())
             {
-                PartEntity[] parts = entity.getParts();
+                PartEntity<?>[] parts = entity.getParts();
                 if(parts != null)
-                    for(PartEntity part : entity.getParts())
+                    for(PartEntity<?> part : entity.getParts())
                         if (entity != ignoredEntity && predicate.test(part))
                             list.add(part);
             }
@@ -55,9 +55,9 @@ public abstract class MixinLevel
 
             if (entity.isMultipartEntity())
             {
-                PartEntity[] parts = entity.getParts();
+                PartEntity<?>[] parts = entity.getParts();
                 if(parts != null)
-                    for(PartEntity part : entity.getParts())
+                    for(PartEntity<?> part : entity.getParts())
                     {
                         T t = eType.tryCast(part);
                         if (t != null && predicate.test(t)) {

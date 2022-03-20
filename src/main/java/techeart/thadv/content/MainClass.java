@@ -11,12 +11,12 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import techeart.thadv.content.entities.EntityBossStoneGuardian;
+import techeart.thadv.content.entity.entities.boss.EntityBossStoneGuardian;
 import techeart.thadv.content.gui.GuiBossEventBar;
 import techeart.thadv.content.gui.GuiHotbarRune;
 import techeart.thadv.content.gui.GuiTooltipRune;
 import techeart.thadv.content.network.PacketHandler;
-import techeart.thadv.content.world.structures.StructuresHandler;
+import techeart.thadv.content.world.structure.StructuresHandler;
 import techeart.thadv.utils.DispenserBehaviourHandler;
 import techeart.thadv.utils.RenderHandler;
 

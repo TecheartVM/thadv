@@ -5,7 +5,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 import techeart.thadv.content.MainClass;
-import techeart.thadv.content.world.ModBossEvent;
+import techeart.thadv.content.world.event.ModBossEvent;
 
 import java.util.UUID;
 import java.util.function.Function;

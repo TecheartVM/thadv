@@ -9,14 +9,14 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import techeart.thadv.content.entities.EntityBossStoneGuardian;
-import techeart.thadv.content.entities.EntityCarvedRune;
-import techeart.thadv.content.entities.EntityEruptionSource;
-import techeart.thadv.content.entities.EntityLavaBall;
+import techeart.thadv.content.entity.entities.boss.EntityBossStoneGuardian;
+import techeart.thadv.content.entity.entities.misc.EntityCarvedRune;
+import techeart.thadv.content.entity.entities.misc.EntityEruptionSource;
+import techeart.thadv.content.entity.entities.projectile.EntityLavaBall;
 import techeart.thadv.content.items.ItemPowerCrystal;
-import techeart.thadv.content.world.structures.CompleteStructureFeature;
-import techeart.thadv.content.world.structures.StructuresHandler;
-import techeart.thadv.content.world.structures.overworld.StructureForge;
+import techeart.thadv.content.world.structure.CompleteStructureFeature;
+import techeart.thadv.content.world.structure.StructuresHandler;
+import techeart.thadv.content.world.structure.structures.overworld.StructureForge;
 
 public class RegistryHandler
 {

@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
-import techeart.thadv.content.entities.IEasySyncable;
+import techeart.thadv.content.entity.entities.basic.IEasySyncable;
 
 import java.util.function.Supplier;
 
