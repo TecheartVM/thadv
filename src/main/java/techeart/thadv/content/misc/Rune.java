@@ -19,6 +19,15 @@ public class Rune
     public static final Rune WATER = register("water");
     public static final Rune EARTH = register("earth");
     public static final Rune AIR = register("air");
+    public static final Rune CREATION = register("creation");
+    public static final Rune DARKNESS = register("darkness");
+    public static final Rune DESTRUCTION = register("destruction");
+    public static final Rune ENERGY = register("energy");
+    public static final Rune LIFE = register("life");
+    public static final Rune LIGHT = register("light");
+    public static final Rune PROTECTION = register("protection");
+    public static final Rune REALITY = register("reality");
+    public static final Rune WEAPON = register("weapon");
 
     public static Rune register(String name, ResourceLocation rl)
     {

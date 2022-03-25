@@ -113,8 +113,11 @@ public class GuiSelectRune extends Screen
             RenderSystem.setShaderTexture(0, rune.getResourceLocation());
             blit(poseStack, x+1, y, this.getBlitOffset(), 0.0f, 0.0f, width-2, width-2, width-2, width-2);
             //rune name
-            String text = rune.getName();
-            font.draw(poseStack, text, x+1 + (width - font.width(text)) * 0.5f, y + width-2, 0x00ffff);
+            if(isHovered())
+            {
+                String text = rune.getName();
+                font.draw(poseStack, text, x + 1 + (width - font.width(text)) * 0.5f, y + width - 2, 0x00ffff);
+            }
         }
 
         @Override

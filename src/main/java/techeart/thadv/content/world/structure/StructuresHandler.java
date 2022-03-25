@@ -91,7 +91,7 @@ public class StructuresHandler
 
         Map<StructureFeature<?>, StructureFeatureConfiguration> temp =
                 new HashMap<>(chunkGenerator.getSettings().structureConfig());
-        for(RegistryObject<StructureFeature<?>> structure : RegistryHandler.STRUCTURES.getEntries())
+        for(RegistryObject<StructureFeature<?>> structure : RegistryHandler.Structures.ALL.getEntries())
         {
             temp.putIfAbsent(structure.get(), StructureSettings.DEFAULTS.get(structure.get()));
         }

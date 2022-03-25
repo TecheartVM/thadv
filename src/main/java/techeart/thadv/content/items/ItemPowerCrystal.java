@@ -46,7 +46,7 @@ public class ItemPowerCrystal extends Item
 
     static
     {
-        DispenserBehaviourHandler.registerBehaviour(RegistryHandler.POWER_CRYSTAL::get, (source, stack) -> {
+        DispenserBehaviourHandler.registerBehaviour(RegistryHandler.Items.POWER_CRYSTAL::get, (source, stack) -> {
             Direction dir = source.getBlockState().getValue(DispenserBlock.FACING);
             Rune rune = getSelectedRune(stack);
             if(carveBlock(source.getLevel(), source.getPos().relative(dir), dir.getOpposite(), rune))

@@ -37,7 +37,7 @@ public class CompleteStructureFeature<C extends FeatureConfiguration>
         int seedModifier = random.nextInt(Integer.MAX_VALUE - 1000000000) + 1000000000;
         spacingConfig = new StructureFeatureConfiguration(avgChunksBetweenStr, minChunksBetweenStr, seedModifier);
 
-        structureRO = RegistryHandler.STRUCTURES.register(name, factory);
+        structureRO = RegistryHandler.Structures.ALL.register(name, factory);
     }
 
     public CompleteStructureFeature<C> transformsLand()

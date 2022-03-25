@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "lit=false,camouflage=false": {
+      "model": "thadv:block/core_trap"
+    },
+    "lit=true,camouflage=false": {
+      "model": "thadv:block/core_trap"
+    },
+    "lit=false,camouflage=true": {
+      "model": "thadv:block/core_trap_camouflage"
+    },
+    "lit=true,camouflage=true": {
+      "model": "thadv:block/core_trap_camouflage"
+    }
+  }
+}

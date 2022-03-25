@@ -13,4 +13,10 @@ public class Utils
         ItemStack item = player.getItemInHand(hand);
         item.hurtAndBreak(damage, player, (p) -> p.broadcastBreakEvent(hand));
     }
+
+    public static float getColorR(int color) { return (float)(color >> 16 & 255) / 255.0F; }
+
+    public static float getColorG(int color) { return (float)(color >> 8 & 255) / 255.0F; }
+
+    public static float getColorB(int color) { return (float)(color & 255) / 255.0F; }
 }

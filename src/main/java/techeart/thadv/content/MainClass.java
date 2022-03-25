@@ -63,6 +63,7 @@ public class MainClass
         GuiTooltipRune.init();
 
         RenderHandler.registerEntityRenderers();
+        RenderHandler.registerBlockEntityRenderers();
     }
 
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
@@ -71,7 +72,7 @@ public class MainClass
         @SubscribeEvent
         public static void registerEntityAttributes(EntityAttributeCreationEvent event)
         {
-            event.put(RegistryHandler.STONE_GUARDIAN.get(), EntityBossStoneGuardian.createAttributes().build());
+            event.put(RegistryHandler.Entities.STONE_GUARDIAN.get(), EntityBossStoneGuardian.createAttributes().build());
         }
     }
 }
